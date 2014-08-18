@@ -1,0 +1,101 @@
+/*---------------------------------------------------------------------------------
+/*    Virtual Liquid Handler 
+/*
+/*	  V L H. c s s
+/*
+/*	  General model template for an ANSI/SLAS-format 96-well consumable.
+/*	  and its particular instances.
+/*
+/*	  Last revision: IH 2014-07-30
+/*
+/*    (C)2014 Lexogen GmbH
+/*---------------------------------------------------------------------------------
+*/
+
+div.BILLBOARD3 {		
+	position: absolute; 
+	background-color: #AAB065; 
+	color: yellow; 	
+	z-index: 10; 
+	padding: 10px; 
+	margin: 2px; 	
+	height: 30px; 
+	opacity: 0.7; 
+	font-size: 20px;	
+	top: 20px; 	
+	left: 20px;
+	right: 20px;
+	border-radius: 5px;
+	}
+
+div.BILLBOARD4 {		
+	visibility: hidden;	
+	position: absolute; 
+	background-color: #AAB065; 
+	/*
+	animation: blinker 2s infinite;
+	*/
+	border-radius: 5px;
+	color: yellow; 	
+	z-index: 10; 
+	padding: 10px; 
+	margin: 0px; 	
+	width: 80px;
+	opacity: 0.7; 	
+	bottom: 140px; 	
+	left: 20px;
+	}
+	
+div.BILLBOARD5 {			
+	visibility: hidden;	
+	position: absolute; 
+	background-color: #AAB065; 	
+	border-radius: 5px;
+	color: white; 	
+	z-index: 10; 
+	font-size: 15px;	
+	padding: 10px; 
+	margin: 0px; 	
+	width: 300px;
+	opacity: 0.8; 	
+	top: 120px; 	
+	left: 20px;
+	}
+	
+div.BILLBOARD6 {		
+	position: absolute; 	
+	z-index: 10; 
+	padding: 30px; 		
+	width: 250px;
+	top:40px;	
+	right: 0px;
+	}
+
+/* controls */	
+
+input[type="button"] {
+	background-color: #006677;    
+    border-radius:6px;
+    color: #999999;    
+    font-size: 15px;        
+}
+
+
+input:hover[type="button"] {
+	background-color: #0099BB;        
+    color: #BBBBBB;        
+}
+
+/* text attributes */	
+
+mark{
+    color:#ffff00;
+    background: none;
+}
+
+@keyframes blinker
+{
+from { opacity : 1.0; }
+50% { opacity: 0.0; }
+to { opacity: 1.0; }
+}
