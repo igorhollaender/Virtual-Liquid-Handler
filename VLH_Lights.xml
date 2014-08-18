@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D version="3.0" profile="Immersive" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.0.xsd">
+	<head>
+		<meta name="filename" content="VLH_Lights.js" />
+		<meta name="generator" content="IH" />
+	</head>
+	<Scene>				
+			<Group DEF="Lights">
+			<Transform DEF="LightA_TRANSFORM"
+		           translation="0 0 0"		           
+		           >
+					<DirectionalLight DEF="Light_A"
+			                  ambientIntensity="1.0000"
+			                  color="1.0000 1.0000 1.0000"
+			                  intensity="0.2"
+			                  direction="-1.0000 -1.0000 0.0000"							  							  
+			                  />
+			</Transform>
+			
+			<Transform DEF="LightB_TRANSFORM"
+		           translation="0 0 0"		           
+		           >
+					<DirectionalLight DEF="Light_B"
+			                  ambientIntensity="1.0000"
+			                  color="1.0000 1.0000 1.0000"
+			                  intensity="0.8"
+			                  direction="-0.1000 -1.0000 0.2"
+							  shadowIntensity='0.2' 
+							  shadowMapSize='1000' 
+							  shadowCascades='3' 
+							  shadowFilterSize='5' 
+			                  />
+			</Transform>
+			</Group>						
+	</Scene>
+</X3D>

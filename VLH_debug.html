@@ -1,0 +1,114 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Virtual Liquid Handler</title>
+    <script type='text/javascript' src='http://x3dom.org/release/x3dom-full.js'> </script>
+    <link rel='stylesheet' type='text/css' href='http://x3dom.org/release/x3dom.css'/>
+	<link rel='stylesheet' type='text/css' href='VLH.css'/>
+	<script type='text/javascript' src='JS/VLH_Core.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Deck.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Help.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Plate96.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Plate384.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Pipettor.js'> </script>
+	<script type='text/javascript' src='JS/VLH_HamiltonSpecials.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Liquid.js'> </script>
+	
+	<script type='text/javascript' src='JS/VLH_Async_Scheduler.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Commands_Async.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Protocol_autoQuantSeq.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Protocol_autoQuantSeq_STAR.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Protocol_Tests.js'> </script>
+	
+</head>
+<body>
+<Script mustEvaluate="true" directOutput="true">
+				document.onload = function()
+				{
+					SetDeck("STARNGS");
+					//SetDeck("SCICLONE");
+					SetPipettor("PIPETTOR96",2);
+										
+					//StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_NONE});
+					
+					eval("var detailsOfThisRun=" + sessionStorage.getItem("detailsOfNextRun"));					
+					StartProtocolAnimation("autoQuantSeq_STAR",detailsOfThisRun);						
+					//StartProtocolAnimation("DEMO1",{animationSpeed: ANIMATION_SPEED_NONE});
+					//StartProtocolAnimation("DEMO1",{animationSpeed: ANIMATION_SPEED_NORMAL});
+				}
+</Script>
+
+<div id="BILLBOARD3" class="BILLBOARD3">Ready.</div>
+<div id="BILLBOARD4" class="BILLBOARD4"></div>
+<div id="BILLBOARD5" class="BILLBOARD5"></div>
+<div id="BILLBOARD6" class="BILLBOARD6"><img style="width:100%; height:auto;" src="autoQUANTSEQ_Logo_1000x648.png"/> </div>
+<x3d id="X3DObject" version="3.0" style='width:100%;height:100%;' profile="Immersive" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.0.xsd"
+showStat='false'>
+    <scene DEF="Scene" id="Scene">
+			<background  skyColor="0.0 0.17 0.25"></background>
+			<viewpoint id="default" position="-0.5 0.5 -0.5" orientation="0 0.8 0.34 3.7" fieldOfView="0.9"></viewpoint>
+			<viewpoint id="topQuasiOrtho" position="0.075  1000 0" orientation="0 1 1 3.1415" fieldOfView="0.0008"></viewpoint>
+			<viewpoint id="topC3D4QuasiOrtho" position="-0.15 100 -0.10" orientation="0 1 1 3.1415" fieldOfView="0.0025"></viewpoint>
+
+			<Transform DEF="Lights_TRANSFORM" translation="0 0 0" >
+				<Inline DEF="Lights" nameSpaceName="Lights" mapDEFToID="true" url="VLH_Lights.xml" />
+			</Transform>
+
+			<Group id="Deck_GROUP"></Group>
+			<Group id="Pipettor_and_Labware_GROUP">
+				<Group id="Pipettor_GROUP"></Group>
+				<Group id="Labware_GROUP"></Group>
+			</Group>
+
+    </scene>
+</x3d>
+
+<footer style="position: absolute; bottom:5; height:auto;">
+	<div style="margin:10">
+		<input type="button" value="HELP" onclick="ShowHelp(1);" />
+		<!-- <input type="button" value="Clean deck" onclick="CleanDeck(currentPipettorId,currentDeck);" /> 
+		
+		<input type="button" value="DEMO1 NORMAL" onclick='StartProtocolAnimation("DEMO1",{animationSpeed: ANIMATION_SPEED_NORMAL});'/>
+		<input type="button" value="DEMO1 FAST" onclick='StartProtocolAnimation("DEMO1",{animationSpeed: ANIMATION_SPEED_FAST});'/>		
+		<input type="button" value="autoQuantSeq DEMO NORMAL" onclick='StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_NORMAL});'/>
+		<input type="button" value="autoQuantSeq DEMO FAST" onclick='StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_FAST});'/>
+		-->
+		<input type="button" value="Restart" onclick=
+			'sessionStorage.setItem("detailsOfNextRun","{animationSpeed: ANIMATION_SPEED_NORMAL}");location.reload();'
+			/>
+		<input type="button" value="Restart (light mode)" onclick=
+			'sessionStorage.setItem("detailsOfNextRun","{animationSpeed: ANIMATION_SPEED_NONE}");location.reload();'
+			/>					
+		<!--
+		<input type="button" value="aQS1" onclick='StartProtocolAnimation("autoQuantSeq1");'/>
+		<input type="button" value="aQS2" onclick='StartProtocolAnimation("autoQuantSeq2");'/>
+		<input type="button" value="aQS3" onclick='StartProtocolAnimation("autoQuantSeq3");'/>
+		<input type="button" value="aQS4" onclick='StartProtocolAnimation("autoQuantSeq4");'/>
+		<input type="button" value="aQS5" onclick='StartProtocolAnimation("autoQuantSeq5");'/>
+		<input type="button" value="aQS6" onclick='StartProtocolAnimation("autoQuantSeq6");'/>
+		
+		<input type="button" value="Stop" onclick='TerminateProtocolAnimation();'/>
+		-->
+
+	</div>
+	<div style="margin:10">
+		<input type="button" value="Oblique View" onclick=
+			"document.getElementById('default').setAttribute('set_bind','true');
+			 document.getElementById('X3DObject').runtime.resetView();	"/>
+		<input type="button" value="Top View" onclick=
+			"document.getElementById('topQuasiOrtho').setAttribute('set_bind','true');
+			 document.getElementById('X3DObject').runtime.resetView();"/>
+		<input type="button" value="Top Close View" onclick=
+			"document.getElementById('topC3D4QuasiOrtho').setAttribute('set_bind','true');
+			 document.getElementById('X3DObject').runtime.resetView();"/>
+	</div>
+	<div style="margin:10">
+		<b>VIRTUAL LIQUID HANDLER, Ver. DEBUG 2014-08-06a (Experimental)</b>
+		Copyright (C)2014 <a href="http://www.lexogen.com">Lexogen GmbH.</a>.
+		Powered by <a href="http://www.x3dom.org">X3DOM.</a>
+		Tested with <a href="http://www.mozilla.org/en-US/firefox">Firefox 31.0.</a>
+	</div>	
+</footer>
+
+</body>
+</html>
