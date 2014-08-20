@@ -4,7 +4,7 @@
 //	  V L H _ C o r e . j s
 //
 //
-//	  Last revision: IH 2014-08-06
+//	  Last revision: IH 2014-08-20
 //
 //    (C)2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -17,8 +17,7 @@
 //		IH140731	Animation stops when the window is not visible (due to WebGL requestAnimationFrame behaviour)
 //					Do something about it
 //		IH140801	replace all x3dom.fields.SFVec3f by {x: xxx, y:yyy, z:zzz}
-//		IH140805	optimize implemnetation of non-animation case (already done for MoveLabware, MovePipettor, FillLabware)
-//		IH140806	implement Plate96 and Plate384 as subclasses of UniversalPlate
+//		IH140805	optimize implementation of non-animation case (already done for MoveLabware, MovePipettor, FillLabware)
 //		IH140730	implement different relative volumes for tip and plate well for transfer
 //					(HPS96 and 150ul tip are approx similar, but Corning384 or Deepwell 
 //					and 150ul tips are unproportional)

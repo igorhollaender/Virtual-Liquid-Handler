@@ -3,7 +3,7 @@
 //
 //	  V L H _ P r o t o c o l _ a u t o Q u a n t S e q _ S T A R . j s
 //
-//	  Last revision: IH 2014-08-06
+//	  Last revision: IH 2014-08-20
 //
 //    (C) 2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ function autoQuantSeq_STAR_1() {
 			 {wellId:'4',liquidClass: 'RS2',relativeVolume:0.5},
 			 {wellId:'5',liquidClass: 'SS1',relativeVolume:0.5},
 			 {wellId:'6',liquidClass: 'SS2E2',relativeVolume:0.5},
-			 {wellId:'7',liquidClass: 'PME3',relativeVolume:0.5},
+			 {wellId:'7',liquidClass: 'PME3',relativeVolume:0.5}
 			],		
 			{wellsToShowString:'1 2 3 4 5 6 7'}
 			);

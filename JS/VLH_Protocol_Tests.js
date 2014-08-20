@@ -3,7 +3,7 @@
 //
 //	  V L H _ P r o t o c o l _ T e s t s . j s
 //
-//	  Last revision: IH 2014-08-01
+//	  Last revision: IH 2014-08-19
 //
 //    (C)2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -25,6 +25,34 @@ function DEMO1() {
 		
 		//C_pipette('D4','P1',3,1,'LiquidClassYellow',-0.9);					
 		*/
+		C_prepare_and_place_plate('Corning384','P384a1','Cool',null,{"columnShownTo": 5});
+		C_load_tips('TIPBOX1','C3',1,2);			
+		C_pipette('D3','P1',1,2,'LiquidClassRed',0.9);
+		C_pipette('D4','P2',1,1,'LiquidClassRed',-0.3);
+		C_pipette('D4','P2',1,2,'LiquidClassRed',-0.3);
+		C_pipette('D4','P2',1,3,'LiquidClassRed',-0.3);		
+		C_discard_tips	();
+		/*
+		C_prepare_and_place_tip_box('TIPBOX1','T11',1);
+		
+		C_prepare_and_place_plate('HSP96','P2','Cool',null,
+					{"columnShownTo": 2});
+		C_prepare_and_place_plate('SealingFilmForHSP96','P2sealing','Cool',null);
+		C_prepare_and_place_plate('LidForHSP96','P2Lid','Cool',null);
+		
+		C_prepare_and_place_plate('DeepWell96','P3','Heat',null,
+					{"columnShownTo": 2});
+					
+		C_prepare_and_place_plate('LidForDeepWell96','P3Lid','Heat',null);					
+		/*
+		C_prepare_and_place_plate('HSP96','P2','Cool',
+					[{column:'1',liquidClass: 'LiquidClassPink',relativeVolume:0.9},
+				     {column:'2',liquidClass: 'LiquidClassYellow',relativeVolume:0.6}					 
+					 ],					
+					 {wellsToShowString: 'A1 A2 A3 A4 A5 A6 B1 B2 H3'}					 
+					 );		
+		
+		/*
 		C_prepare_and_place_plate('TubeCarrier32','CAR1','E1',
 			[{wellId:'1',liquidClass: 'LiquidClassPink',relativeVolume:0.9},
 			 {wellId:'2',liquidClass: 'LiquidClassWhite',relativeVolume:0.5},
@@ -32,7 +60,8 @@ function DEMO1() {
 			],		
 			{wellsToShowString:'1 2 3 30 31 32'}
 			);
-			
+		
+		/*		
 		C_prepare_and_place_plate('TroughCarrier5','CAR2','W3',			
 			[{wellId:'1',liquidClass: 'EtOH',relativeVolume:0.9},
 			 {wellId:'2',liquidClass: 'LiquidClassRed',relativeVolume:0.6}
