@@ -168,11 +168,17 @@ var C_discard_labware = function(labwareId) {
 }
 
 var C_discard_tips = function() {		
+	//IH140821 for legacy reasons, default tip waste position was 'D5' (PE Sciclone)
+	var tipWasteLocationString="D5";
+	if(arguments.length==1) {
+		var tipWasteLocationString=arguments[0];
+	}
+	
 	ASched_postMessage({
 		"command" : 
-			"MovePipettor(currentPipettorId,currentDeck,'D5',0,0,0)", 
+			"MovePipettor(currentPipettorId,currentDeck,'" + tipWasteLocationString + "',0,0,0)", 
 		"narrative": 
-			"Moving head to D5"  
+			"Moving head to position " +  tipWasteLocationString
 		}); 
 		ASched_wait(standardWaitTime);		
 	ASched_postMessage({

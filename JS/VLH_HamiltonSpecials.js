@@ -5,7 +5,7 @@
 //
 //	  Special components used in the Hamilton Star liquid handlers
 //
-//	  Last revision: IH 2014-08-20
+//	  Last revision: IH 2014-08-22
 //
 //    (C)2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ function TubeCarrier32(id,parentGroupId,deck,locationId,details) {
 	this.id = id;
 	this.parentGroupId = parentGroupId;
 		
-	UniversalPlate.call(this,id,parentGroupId,details);	
+	UniversalPlate.call(this,id,parentGroupId,'Labware',details);	
 			
 	this.lowerBoxSizeX =				0.030;
 	this.lowerBoxHeight =				0.010;
@@ -104,7 +104,7 @@ function TroughCarrier5(id,parentGroupId,deck,locationId,details) {
 	this.id = id;
 	this.parentGroupId = parentGroupId;
 		
-	UniversalPlate.call(this,id,parentGroupId,details);	
+	UniversalPlate.call(this,id,parentGroupId,'Labware',details);	
 			
 	this.lowerBoxSizeX =				0.030;
 	this.lowerBoxHeight =				0.010;
@@ -173,7 +173,7 @@ function CoolTubeModule(id,parentGroupId,deck,locationId,details) {
 	this.id = id;
 	this.parentGroupId = parentGroupId;
 			
-	UniversalPlate.call(this,id,parentGroupId,details);	
+	UniversalPlate.call(this,id,parentGroupId,'Labware',details);	
 	
 	this.lowerBoxSizeX =				0.115;
 	this.lowerBoxHeight =				0.010;

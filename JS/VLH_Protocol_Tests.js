@@ -3,7 +3,7 @@
 //
 //	  V L H _ P r o t o c o l _ T e s t s . j s
 //
-//	  Last revision: IH 2014-08-19
+//	  Last revision: IH 2014-08-21
 //
 //    (C)2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -24,19 +24,33 @@ function DEMO1() {
 		C_move_head('D0');
 		
 		//C_pipette('D4','P1',3,1,'LiquidClassYellow',-0.9);					
-		*/
-		C_prepare_and_place_plate('Corning384','P384a1','Cool',null,{"columnShownTo": 5});
-		C_load_tips('TIPBOX1','C3',1,2);			
-		C_pipette('D3','P1',1,2,'LiquidClassRed',0.9);
-		C_pipette('D4','P2',1,1,'LiquidClassRed',-0.3);
-		C_pipette('D4','P2',1,2,'LiquidClassRed',-0.3);
-		C_pipette('D4','P2',1,3,'LiquidClassRed',-0.3);		
-		C_discard_tips	();
-		/*
-		C_prepare_and_place_tip_box('TIPBOX1','T11',1);
 		
-		C_prepare_and_place_plate('HSP96','P2','Cool',null,
+		
+		C_prepare_and_place_plate('HSP96','P3','3',
+					[{column:'1',liquidClass: 'LiquidClassRed',relativeVolume:0.9}],
 					{"columnShownTo": 2});
+		
+		C_prepare_and_place_plate('HSP96','P5','5',null,
+					{"columnShownTo": 2});
+		C_prepare_and_place_tip_box('TIPBOX1','T25',1);
+		C_load_tips('TIPBOX1','T25',1,2);			
+		C_pipette('3','P3',1,2,'LiquidClassRed',0.9);
+		C_pipette('5','P5',1,1,'LiquidClassRed',-0.3);
+		C_pipette('5','P5',1,2,'LiquidClassRed',-0.3);
+		C_pipette('5','P5',1,3,'LiquidClassRed',-0.3);		
+		C_discard_tips	("X");
+		
+		*/
+		C_prepare_and_place_tip_box('TIPBOX1','C3',1);		
+		C_prepare_and_place_plate('HSP96','P2','D4',
+					[{column:'1',liquidClass: 'LiquidClassRed',relativeVolume:0.9}],
+					{"columnShownTo": 5});
+		C_load_tips('TIPBOX1','C3',1,1);	
+		C_pipette('D4','P2',1,1,'LiquidClassRed',0.9);		
+		C_pipette('D4','P2',1,2,'LiquidClassRed',-0.9);		
+		C_discard_tips	();
+		
+		/*
 		C_prepare_and_place_plate('SealingFilmForHSP96','P2sealing','Cool',null);
 		C_prepare_and_place_plate('LidForHSP96','P2Lid','Cool',null);
 		
@@ -44,6 +58,11 @@ function DEMO1() {
 					{"columnShownTo": 2});
 					
 		C_prepare_and_place_plate('LidForDeepWell96','P3Lid','Heat',null);					
+		
+				
+		C_prepare_and_place_plate('Corning384','P6','3',null,				
+					{"columnShownTo": 5});
+				
 		/*
 		C_prepare_and_place_plate('HSP96','P2','Cool',
 					[{column:'1',liquidClass: 'LiquidClassPink',relativeVolume:0.9},

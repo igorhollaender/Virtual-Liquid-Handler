@@ -3,7 +3,7 @@
 //
 //	  V L H _ P r o t o c o l _ a u t o Q u a n t S e q . j s
 //
-//	  Last revision: IH 2014-08-05
+//	  Last revision: IH 2014-08-22
 //
 //    (C) 2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -16,7 +16,6 @@
 //	IH140730	implement different relative volumes for tip and plate well for transfer
 //				(HPS96 and 150ul tip are approx similar, but Corning384 or Deepwell 
 //				and 150ul tips are unproportional)
-//
 
 function autoQuantSeq1() {
 
@@ -976,7 +975,7 @@ function autoQuantSeq6() {
 		U_show_details('WASTE2',1);
 		C_pipette('B4','WASTE2',3,1,'SN',-1);
 		U_show_details('WASTE2',0);
-		C_discard_tips();
+		C_discard_tips('A4');
 
 
 	// wash twice with EtOH
@@ -1016,7 +1015,7 @@ function autoQuantSeq6() {
 		
 		C_pipette('A3','P22',3,1,'EtOH',0.1);	// EtOH residuals
 		C_pipette('B4','WASTE2',3,1,'EtOH',-0.1);
-		C_discard_tips();
+		C_discard_tips('A4');
 
 					U_show_narrative_extended(
 						'We move the plate to a thermal unit and leave the beads ' +
@@ -1065,7 +1064,7 @@ function autoQuantSeq6() {
 		C_pipette('A3','P22',3,1,'SN',0.6);
 		C_pipette('C2','P24',3,1,'SN',-0.6);
 
-		C_discard_tips();
+		C_discard_tips('A4');
 		C_move_head('A2');
 		C_move_labware('P22','A3');
 		

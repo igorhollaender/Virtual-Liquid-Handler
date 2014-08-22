@@ -11,8 +11,8 @@
 <Script mustEvaluate="true" directOutput="true">
 				document.onload = function()
 				{
-					SetDeck("SCICLONE");
-					SetPipettor("PIPETTOR96",2);				
+					SetDeck("SCICLONE");					
+					SetPipettor("Pipettor96",{columnShownTo: 2});					
 					eval("var detailsOfThisRun=" + sessionStorage.getItem("detailsOfNextRun"));					
 					StartProtocolAnimation("autoQuantSeq",detailsOfThisRun);						
 				}
@@ -65,7 +65,7 @@ showStat='false'>
 			 document.getElementById('X3DObject').runtime.resetView();"/>
 	</div>
 	<div style="margin:10">
-		<b>VIRTUAL LIQUID HANDLER, Ver. 2014-08-20a (Experimental)</b>
+		<b>VIRTUAL LIQUID HANDLER, Ver. 2014-08-22a (Experimental)</b>
 		Copyright (C)2014 <a href="http://www.lexogen.com">Lexogen GmbH.</a>.
 		Powered by <a href="http://www.x3dom.org">X3DOM.</a>
 		Tested with <a href="http://www.mozilla.org/en-US/firefox">Firefox 31.0.</a>

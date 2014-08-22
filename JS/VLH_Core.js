@@ -702,7 +702,7 @@ var LoadTips = function(pipettorId,numberOfTipColumns) {
 		for(var c=1; c<=12; c++)
 		{
 			var tipToHide_TransformNode = Array.prototype.slice.call(
-			document.getElementsByClassName("Tip TRANSFORM " + " Column" + c.toString() + " "  + pipettorId));
+			document.getElementsByClassName("Well TRANSFORM " + " Column" + c.toString() + " "  + pipettorId));
 
 			var scaleString = "1 0 1";
 			if (c<=numberOfTipColumns)
@@ -718,7 +718,7 @@ var LoadTips = function(pipettorId,numberOfTipColumns) {
 var EjectTips = function(pipettorId) {
 		LoadTips(pipettorId,0);
 
-		Array.prototype.slice.call(document.getElementsByClassName("LiquidInTip MATERIAL " + pipettorId))
+		Array.prototype.slice.call(document.getElementsByClassName("Liquid MATERIAL " + pipettorId))
 			.forEach(function(e,i,a) {
 				SetMaterialLiquid(e,"LiquidClassEmptyTips");
 			});
@@ -744,13 +744,13 @@ var FillPipettor = function(pipettorId,liquidClass,liquidLevelRelative) {
 	//IH140729 commented out for debugging only
 	//if(!(fillPipettor_transformNodes === null)) return;
 
-	fillPipettor_transformNodes = document.getElementsByClassName("LiquidInTip TRANSFORM " + pipettorId);
+	fillPipettor_transformNodes = document.getElementsByClassName("Liquid TRANSFORM " + pipettorId);
 
-	tipLength 	= parseFloat(document.getElementsByClassName("Pipettor GROUP " + pipettorId).item(0).getAttribute("tipLength"));
+	tipLength 	= parseFloat(document.getElementsByClassName("Pipettor GROUP " + pipettorId).item(0).getAttribute("wellHeight"));
 	var actualTipColumns = parseFloat(document.getElementsByClassName("Pipettor GROUP " + pipettorId).item(0).getAttribute("actualTipColumns"));
 
 	//IH140710 in this simplified implementation we assume all affected tips to have the same initial liquid level
-	var liquidProperties = document.getElementsByClassName("LiquidInTip CYLINDER " + pipettorId).item(0);
+	var liquidProperties = document.getElementsByClassName("Liquid CYLINDER " + pipettorId).item(0);
 
 	var initialLiquidLevelRelative = parseFloat(liquidProperties.getAttribute("tipContent_relativeVolume"));
 	var finalLiquidLevelRelative = liquidLevelRelative + initialLiquidLevelRelative;
@@ -839,13 +839,13 @@ var FillPipettor = function(pipettorId,liquidClass,liquidLevelRelative) {
 
 	for(var c=1; c<=12; c++){
 		//IH140717 for simplicity, we assume all loaded tips containing same liquid, same volume
-		Array.prototype.slice.call(document.getElementsByClassName("LiquidInTip MATERIAL Column" + c.toString() + " " +pipettorId))
+		Array.prototype.slice.call(document.getElementsByClassName("Liquid MATERIAL Column" + c.toString() + " " +pipettorId))
 			.forEach(function(e,i,a) {
 				SetMaterialLiquid(e,(c<=actualTipColumns)?liquidClass:"LiquidClassEmptyTips");
 			});
 	}
 
-	Array.prototype.slice.call(document.getElementsByClassName("LiquidInTip CYLINDER "  + pipettorId))
+	Array.prototype.slice.call(document.getElementsByClassName("Liquid CYLINDER "  + pipettorId))
 			.forEach(function(e,i,a) {
 				e.setAttribute("tipContent_relativeVolume",finalLiquidLevelRelative.toString());
 			});
@@ -1060,16 +1060,41 @@ var SetDeck = function(deckType) {
 	}
 }
 
-var SetPipettor = function(pipettorType,columnShownTo) {
-	//IH140724 one pipettor type currently implemented
-
+//IH140822 DEPRECATED
+/*
+var SetPipettor = function(pipettorType,columnShownTo) {	
+	//IH140822 for legacy reasons, this function sets the Pipettor96
+	
 	// currentDeck has to be defined before calling this method
 	RemoveAllChildren('Pipettor_GROUP');
+	
 	currentPipettor = new Pipettor96(currentPipettorId,
 		"Pipettor_GROUP",currentDeck,currentDeck.parkingLocation,0,0,0,
-		{"columnShownTo": columnShownTo}); 
-		
+		{"columnShownTo": columnShownTo}); 	
 }
+*/
+
+var SetPipettor = function(pipettorType,details) {	
+	
+	// currentDeck has to be defined before calling this method
+	RemoveAllChildren('Pipettor_GROUP');
+	switch(pipettorType)
+	{
+	case 'Pipettor8':
+		currentPipettor = new Pipettor8(currentPipettorId,
+		"Pipettor_GROUP",currentDeck,currentDeck.parkingLocation,0,0,0,details);		
+		break;
+	case 'Pipettor96':
+		currentPipettor = new Pipettor96(currentPipettorId,
+		"Pipettor_GROUP",currentDeck,currentDeck.parkingLocation,0,0,0,details);		
+	default:
+		break;
+	}
+			
+	currentPipettor = new Pipettor8(currentPipettorId,
+		"Pipettor_GROUP",currentDeck,currentDeck.parkingLocation,0,0,0,details);		
+}
+
 
 var RemoveLabware = function(labwareId) {
 

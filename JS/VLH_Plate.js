@@ -6,7 +6,7 @@
 //	  General model template for a wellplate-like consumable.
 //	  and its particular instances.
 //
-//	  Last revision: IH 2014-08-20
+//	  Last revision: IH 2014-08-22
 //
 //    (C)2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -16,9 +16,10 @@
 // 	U n i v e r s a l P l a t e
 //
 
-function UniversalPlate(id,parentGroupId,details) {
+function UniversalPlate(id,parentGroupId,classType,details) {
 	this.id = id;
 	this.parentGroupId = parentGroupId;
+	this.classType = classType;
 		
 	
 	this.lowerBoxSizeX =				0.100;
@@ -57,14 +58,27 @@ UniversalPlate.prototype.Create = function() {
 	var group;
 	var appearance;
 	var shape;
-	var box;
-	var wellobject;
+	var box;	
+	
+	var wellObject;	
+	var wellMaterial;
+	var wellTransform;
+	
+	var liquidObject;
+	var liquidMaterial;
+	var liquidTransform;
+		
+	var documentFragment;
+
+	documentFragment = document.createDocumentFragment();
 	
 	transform = document.createElement("Transform");
+	documentFragment.appendChild(transform);		
+	
 	transform.setAttribute("DEF", getUniqueId() );  // unique id
 	
 			transform.classList.add(this.id); 			
-			transform.classList.add("Labware"); 
+			transform.classList.add(this.classType); 
 			transform.classList.add("TRANSFORM"); 			
 	
 	group = document.createElement("Group");
@@ -73,15 +87,14 @@ UniversalPlate.prototype.Create = function() {
 	
 	// custom attributes ("member objects") are hosted in this group
 	
-	group.setAttribute("wellHeight",this.wellHeight.toString() );  
-	group.setAttribute("wellOffsetFromPlateBottom",this.wellOffsetFromPlateBottom.toString() );  
+	//IH140822 these attributes make little sense now, as the universal plate allows different
+	// geometry for individual wells. 
+	//group.setAttribute("wellHeight",this.wellHeight.toString() );  
+	//group.setAttribute("wellOffsetFromPlateBottom",this.wellOffsetFromPlateBottom.toString() );  
 	
 			group.classList.add(this.id); 			
-			group.classList.add("Labware"); 
-			group.classList.add("GROUP"); 			
-		
-	
-	document.getElementById(this.parentGroupId).appendChild(transform);		
+			group.classList.add(this.classType); 
+			group.classList.add("GROUP"); 					
 	
 	// lower box  ...
 	
@@ -147,7 +160,7 @@ UniversalPlate.prototype.Create = function() {
 	var detailsGroup = document.createElement("Group");
 	detailsGroup.setAttribute("id",getUniqueId());   
 	detailsGroup.classList.add(this.id); 			
-	detailsGroup.classList.add("Labware"); 
+	detailsGroup.classList.add(this.classType); 
 	detailsGroup.classList.add("Details"); 
 	detailsGroup.classList.add("GROUP"); 					
 	group.appendChild(detailsGroup);		
@@ -164,6 +177,7 @@ UniversalPlate.prototype.Create = function() {
 		}		
 		
 		var wellGroup = document.createElement("Group");
+		wellGroup.classList.add("Well","GROUP");		
 		
 		// wells ...
 														
@@ -173,10 +187,10 @@ UniversalPlate.prototype.Create = function() {
 				
 		switch(e.shape) {		
 		case "INDEXEDFACESET":
-			wellobject = document.createElement("IndexedFaceSet");
-			wellobject.setAttribute("solid","false");										
-			wellobject.setAttribute("creaseAngle","3.14");										
-			wellobject.setAttribute("coordIndex",
+			wellObject = document.createElement("IndexedFaceSet");
+			wellObject.setAttribute("solid","false");										
+			wellObject.setAttribute("creaseAngle","3.14");										
+			wellObject.setAttribute("coordIndex",
 				"0 1 5 4 -1 " + 
 				"1 2 6 5 -1 " +
 				"2 3 7 6 -1 " +
@@ -211,103 +225,96 @@ UniversalPlate.prototype.Create = function() {
 								(+e.radiusZ).toString() +  " "  +								
 								""
 				);			
-			wellobject.appendChild(coordinates);	
+			wellObject.appendChild(coordinates);	
 			break;
 		case "BOX":
 			
-			wellobject = document.createElement("Box");
-			wellobject.setAttribute("size",
+			wellObject = document.createElement("Box");
+			wellObject.setAttribute("size",
 					(e.radiusX*2).toString() + " " +
 					tthis.wellHeight.toString() + " " +
 					(e.radiusZ*2).toString() );			
-			wellobject.setAttribute("solid","false");										
+			wellObject.setAttribute("solid","false");										
 			
 			break;
 		default:
 		case "CYLINDER":
-			wellobject = document.createElement("Cylinder");
-			wellobject.setAttribute("height",tthis.wellHeight.toString());			
-			wellobject.setAttribute("radius",e.radius.toString());
-			wellobject.setAttribute("solid","false");	
-			wellobject.setAttribute("top","false");
-			wellobject.setAttribute("bottom","true");									
+			wellObject = document.createElement("Cylinder");
+			wellObject.setAttribute("height",tthis.wellHeight.toString());			
+			wellObject.setAttribute("radius",e.radius.toString());
+			wellObject.setAttribute("solid","false");	
+			wellObject.setAttribute("top","false");
+			wellObject.setAttribute("bottom","true");									
 			break;
 		}	
 					
-		material = document.createElement("Material");
+		wellMaterial = document.createElement("Material");
 		appearance = document.createElement("Appearance");
 		shape = document.createElement("Shape");
-		transform = document.createElement("Transform");
-		transform.setAttribute("translation", translationString);	
-											
-			material.classList.add(tthis.id); 			
-			material.classList.add("Well"); 
-			material.classList.add("MATERIAL"); 
-								
-		detailsGroup.appendChild(transform);
-		transform.appendChild(wellGroup);
+		wellTransform = document.createElement("Transform");
+		wellTransform.setAttribute("translation", translationString);	
+														
+		detailsGroup.appendChild(wellTransform);
+		wellTransform.appendChild(wellGroup);
 		wellGroup.appendChild(shape);
-		shape.appendChild(wellobject);
+		shape.appendChild(wellObject);
 		shape.appendChild(appearance);
-		appearance.appendChild(material);
+		appearance.appendChild(wellMaterial);
 		
 		// liquid model ...
 		
 		switch(e.shape) {		
 		case "BOX":
 		case "INDEXEDFACESET":
-			wellobject = document.createElement("Box");					
-			wellobject.setAttribute("size",
+			liquidObject = document.createElement("Box");					
+			liquidObject.setAttribute("size",
 				(e.radiusX*2*1.05).toString() + " 2 " + 
 				(e.radiusZ*2*1.05).toString()
 				);
-			wellobject.setAttribute("solid","true");			
+			liquidObject.setAttribute("solid","true");			
 			break;
 			
 		default:
 		case "CYLINDER":
-			wellobject = document.createElement("Cylinder");
-			wellobject.setAttribute("radius",(e.radius*1.05).toString());
-			wellobject.setAttribute("solid","true");
-			wellobject.setAttribute("top","true");
-			wellobject.setAttribute("bottom","true");
+			liquidObject = document.createElement("Cylinder");
+			liquidObject.setAttribute("radius",(e.radius*1.05).toString());
+			liquidObject.setAttribute("solid","true");
+			liquidObject.setAttribute("top","true");
+			liquidObject.setAttribute("bottom","true");
 		}
-		
-			wellobject.classList.add(tthis.id);		
-			wellobject.classList.add("WellId" + e.wellId); 				
-			wellobject.classList.add("CYLINDER");	//IH140819 for elegacy reasons, the class is called 'CYLINDER'		
-			wellobject.classList.add("Liquid");					
-							
-		material = document.createElement("Material");
+											
+		liquidMaterial = document.createElement("Material");
 		appearance = document.createElement("Appearance");
 		shape = document.createElement("Shape");
-		transform1 = document.createElement("Transform");		
-		transform1.setAttribute("DEF",getUniqueId());		
-		
-			transform1.classList.add(tthis.id); 			
-			transform1.classList.add("WellId" + e.wellId); 
-			transform1.classList.add("Liquid"); 
-			transform1.classList.add("TRANSFORM"); 
-									
-			material.classList.add(tthis.id); 
-			material.classList.add("WellId" + e.wellId); 			
-			material.classList.add("Liquid"); 
-			material.classList.add("MATERIAL"); 		
+		liquidTransform = document.createElement("Transform");		
+		liquidTransform.setAttribute("DEF",getUniqueId());	
+
+			wellObject.classList.add		(tthis.id,"Well","WellId" + e.wellId,"CYLINDER");
+			wellTransform.classList.add		(tthis.id,"Well","WellId" + e.wellId,"TRANSFORM");
+			wellMaterial.classList.add		(tthis.id,"Well","WellId" + e.wellId,"MATERIAL");
+			
+			liquidObject.classList.add		(tthis.id,"Liquid","WellId" + e.wellId,"CYLINDER");
+			liquidTransform.classList.add	(tthis.id,"Liquid","WellId" + e.wellId,"TRANSFORM");
+			liquidMaterial.classList.add	(tthis.id,"Liquid","WellId" + e.wellId,"MATERIAL");				
 					
 			if('wellExtraClassListString' in e)
 			{			
 			e.wellExtraClassListString.split(" ").forEach(function(eE,iE,aE){
-					wellobject.classList.add(eE);
-					transform1.classList.add(eE);
-					material.classList.add(eE);
+					wellGroup.classList.add(eE);
+					wellObject.classList.add(eE);
+					wellTransform.classList.add(eE);
+					wellMaterial.classList.add(eE);
+					liquidObject.classList.add(eE);
+					liquidTransform.classList.add(eE);
+					liquidMaterial.classList.add(eE);
 					});			
 			}
 							
-		wellGroup.appendChild(transform1);
-		transform1.appendChild(shape);		
-		shape.appendChild(wellobject);
+		wellGroup.appendChild(liquidTransform);
+		liquidTransform.appendChild(shape);		
+		shape.appendChild(liquidObject);
 		shape.appendChild(appearance);
-		appearance.appendChild(material);
+		appearance.appendChild(liquidMaterial);
 	
 		// labels ...																	
 		
@@ -353,6 +360,8 @@ UniversalPlate.prototype.Create = function() {
 		}
 			
 	});
+	
+	document.getElementById(this.parentGroupId).appendChild(documentFragment);		
 }
 
 UniversalPlate.prototype.SetWellContentEmpty = function() {		
@@ -379,19 +388,19 @@ UniversalPlate.prototype.SetWellContentEmpty = function() {
 }
 
 UniversalPlate.prototype.PlaceOnDeck = function(deck,locationId) {
-		document.getElementsByClassName("Labware TRANSFORM ".concat(this.id)).item(0)						
+		document.getElementsByClassName("TRANSFORM " + this.id + " " + this.classType).item(0)						
 						.setAttribute("translation",	SFVec3fToString(deck.Location[locationId]));					
-		document.getElementsByClassName("Labware GROUP " + this.id).item(0).setAttribute("actualLocationOnDeck",locationId);
+		document.getElementsByClassName("GROUP " + this.id + " " +this.classType).item(0).setAttribute("actualLocationOnDeck",locationId);
 }
 
 //---------------------------------------------------------------------------------
-// 	N e w P l a t e 9 6
+// 	P l a t e 9 6
 //
 
 Plate96.prototype = Object.create(UniversalPlate.prototype);
 Plate96.prototype.constructor = Plate96;
 
-function Plate96(id,parentGroupId,deck,locationId,wellShape,wellRadius,details) {		
+function Plate96(id,parentGroupId,deck,locationId,classType,wellShape,wellRadius,details) {		
 	
 	if(!(details==null))
 	{		
@@ -406,7 +415,7 @@ function Plate96(id,parentGroupId,deck,locationId,wellShape,wellRadius,details) 
 		}	
 	}
 	
-	UniversalPlate.call(this,id,parentGroupId,details);
+	UniversalPlate.call(this,id,parentGroupId,classType,details);
 	
 	this.lowerBoxSizeX =				0.127;
 	this.lowerBoxHeight =				0.004;
@@ -482,7 +491,7 @@ function HSP96(id,parentGroupId,deck,locationId,details) {
 	this.wellRadius	=					0.0025;
 	this.wellShape	=					"CYLINDER";   	
 		
-	Plate96.call(this,id,parentGroupId,deck,locationId,this.wellShape,this.wellRadius,details);
+	Plate96.call(this,id,parentGroupId,deck,locationId,'Labware',this.wellShape,this.wellRadius,details);
 	
 	this.lowerBoxSizeX =				0.127;
 	this.lowerBoxHeight =				0.004;
@@ -539,7 +548,7 @@ function DeepWell96(id,parentGroupId,deck,locationId,details) {
 	this.wellRadius	=					0.004;
 	this.wellShape	=					"INDEXEDFACESET";   	
 		
-	Plate96.call(this,id,parentGroupId,deck,locationId,this.wellShape,this.wellRadius,details);
+	Plate96.call(this,id,parentGroupId,deck,locationId,'Labware',this.wellShape,this.wellRadius,details);
 	
 	this.lowerBoxSizeX =				0.127;
 	this.lowerBoxHeight =				0.004;
@@ -594,7 +603,7 @@ function TipBox96(id,parentGroupId,deck,locationId,details) {
 	this.wellRadius	=					0.0025;
 	this.wellShape	=					"CYLINDER";   	
 		
-	Plate96.call(this,id,parentGroupId,deck,locationId,this.wellShape,this.wellRadius,details);
+	Plate96.call(this,id,parentGroupId,deck,locationId,'Labware',this.wellShape,this.wellRadius,details);
 	
 	this.lowerBoxSizeX =				0.127;
 	this.lowerBoxHeight =				0.002;
@@ -647,7 +656,7 @@ LidForHSP96.prototype.constructor = LidForHSP96;
 
 function LidForHSP96(id,parentGroupId,deck,locationId) {		
 		
-	UniversalPlate.call(this,id,parentGroupId,null);
+	UniversalPlate.call(this,id,parentGroupId,'Labware',null);
 	
 	this.lowerBoxSizeX =				0;
 	this.lowerBoxHeight =				0;
@@ -692,7 +701,7 @@ SealingFilmForHSP96.prototype.constructor = SealingFilmForHSP96;
 
 function SealingFilmForHSP96(id,parentGroupId,deck,locationId) {		
 		
-	UniversalPlate.call(this,id,parentGroupId,null);
+	UniversalPlate.call(this,id,parentGroupId,'Labware',null);
 	
 	this.lowerBoxSizeX =				0;
 	this.lowerBoxHeight =				0;
@@ -736,7 +745,7 @@ LidForDeepWell96.prototype.constructor = LidForDeepWell96;
 
 function LidForDeepWell96(id,parentGroupId,deck,locationId) {		
 		
-	UniversalPlate.call(this,id,parentGroupId,null);
+	UniversalPlate.call(this,id,parentGroupId,'Labware',null);
 	
 	this.lowerBoxSizeX =				0;
 	this.lowerBoxHeight =				0;
@@ -773,13 +782,13 @@ LidForDeepWell96.prototype.SetDefaultMaterialBody = function() {
 
 
 //---------------------------------------------------------------------------------
-// 	N e w P l a t e 3 8 4 
+// 	P l a t e 3 8 4 
 //
 
 Plate384.prototype = Object.create(UniversalPlate.prototype);
 Plate384.prototype.constructor = Plate384;
 
-function Plate384(id,parentGroupId,deck,locationId,wellShape,wellRadius,details) {		
+function Plate384(id,parentGroupId,deck,locationId,classType,wellShape,wellRadius,details) {		
 	
 	if(!(details==null))
 	{		
@@ -797,7 +806,7 @@ function Plate384(id,parentGroupId,deck,locationId,wellShape,wellRadius,details)
 		}	
 	}
 	
-	UniversalPlate.call(this,id,parentGroupId,details);
+	UniversalPlate.call(this,id,parentGroupId,classType,details);
 	
 	this.lowerBoxSizeX =				0.127;
 	this.lowerBoxHeight =				0.002;
@@ -876,7 +885,7 @@ function Corning384(id,parentGroupId,deck,locationId,details) {
 	this.wellRadius =					0.0015;
 	this.wellShape =					"INDEXEDFACESET";
 	
-	Plate384.call(this,id,parentGroupId,deck,locationId,this.wellShape,this.wellRadius,details);
+	Plate384.call(this,id,parentGroupId,deck,locationId,'Labware', this.wellShape,this.wellRadius,details);
 	
 	this.lowerBoxSizeX =				0.127;
 	this.lowerBoxHeight =				0.002;

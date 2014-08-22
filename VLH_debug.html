@@ -10,9 +10,9 @@
 	<script type='text/javascript' src='JS/VLH_Core.js'> </script>
 	<script type='text/javascript' src='JS/VLH_Deck.js'> </script>		
 	<script type='text/javascript' src='JS/VLH_Help.js'> </script>
-	<script type='text/javascript' src='JS/VLH_Liquid.js'> </script>
-	<script type='text/javascript' src='JS/VLH_Pipettor.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Liquid.js'> </script>	
 	<script type='text/javascript' src='JS/VLH_Plate.js'> </script>
+	<script type='text/javascript' src='JS/VLH_Pipettor.js'> </script>
 	<script type='text/javascript' src='JS/VLH_HamiltonSpecials.js'> </script>	
 	<script type='text/javascript' src='JS/VLH_Protocol_autoQuantSeq.js'> </script>
 	<script type='text/javascript' src='JS/VLH_Protocol_autoQuantSeq_STAR.js'> </script>
@@ -24,9 +24,10 @@
 <Script mustEvaluate="true" directOutput="true">
 				document.onload = function()
 				{
-					SetDeck("STARNGS");
-					//SetDeck("SCICLONE");
-					SetPipettor("PIPETTOR96",2);
+					//SetDeck("STARNGS");
+					SetDeck("SCICLONE");
+					SetPipettor("Pipettor96",{columnShownTo: 2});
+					//SetPipettor("Pipettor8",{wellsToShowString: "A B H"});
 										
 					StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_NORMAL});
 					
@@ -102,7 +103,7 @@ showStat='false'>
 			 document.getElementById('X3DObject').runtime.resetView();"/>
 	</div>
 	<div style="margin:10">
-		<b>VIRTUAL LIQUID HANDLER, Ver. DEBUG 2014-08-19a (Experimental)</b>
+		<b>VIRTUAL LIQUID HANDLER, Ver. DEBUG 2014-08-22a (Experimental)</b>
 		Copyright (C)2014 <a href="http://www.lexogen.com">Lexogen GmbH.</a>.
 		Powered by <a href="http://www.x3dom.org">X3DOM.</a>
 		Tested with <a href="http://www.mozilla.org/en-US/firefox">Firefox 31.0.</a>
