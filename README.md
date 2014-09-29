@@ -20,3 +20,6 @@ on various real hardware into 3D-presentable VLH-runs. And vice-versa, it will a
 
 This software is implemented as a webapp in javascript and X3DOM (www.x3dom.org). It runs in a WebGL-supporting
 browser (tested in Firefox and Chrome).
+
+The system can be tested in the GitHub pages available at this URL:
+http://igorhollaender.github.io/Virtual-Liquid-Handler/VLH.html
