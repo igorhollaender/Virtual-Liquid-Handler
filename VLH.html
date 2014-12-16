@@ -12,7 +12,8 @@
 				document.onload = function()
 				{
 					SetDeck("SCICLONE");
-					SetPipettor("PIPETTOR96",2);				
+
+					SetPipettor("Pipettor96",{columnShownTo: 2});				
 					eval("var detailsOfThisRun=" + sessionStorage.getItem("detailsOfNextRun"));					
 					StartProtocolAnimation("autoQuantSeq",detailsOfThisRun);						
 				}
