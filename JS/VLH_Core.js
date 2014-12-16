@@ -4,7 +4,7 @@
 //	  V L H _ C o r e . j s
 //
 //
-//	  Last revision: IH 2014-08-20
+//	  Last revision: IH 2014-12-16
 //
 //    (C)2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -19,7 +19,7 @@
 //		IH140801	replace all x3dom.fields.SFVec3f by {x: xxx, y:yyy, z:zzz}
 //		IH140805	optimize implementation of non-animation case (already done for MoveLabware, MovePipettor, FillLabware)
 //		IH140730	implement different relative volumes for tip and plate well for transfer
-//					(HPS96 and 150ul tip are approx similar, but Corning384 or Deepwell 
+//					(HSP96 and 150ul tip are approx similar, but Corning384 or Deepwell 
 //					and 150ul tips are unproportional)
 
 
