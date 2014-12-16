@@ -24,15 +24,15 @@
 <Script mustEvaluate="true" directOutput="true">
 				document.onload = function()
 				{
-					//SetDeck("STARNGS");
-					SetDeck("SCICLONE");
-					SetPipettor("Pipettor96",{columnShownTo: 2});
-					//SetPipettor("Pipettor8",{wellsToShowString: "A B H"});
+					SetDeck("STARNGS");
+					//SetDeck("SCICLONE");
+					//SetPipettor("Pipettor96",{columnShownTo: 2});
+					SetPipettor("Pipettor8",{wellsToShowString: "A B H"});
 										
-					StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_NORMAL});
+					//StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_NORMAL});
 					
 					eval("var detailsOfThisRun=" + sessionStorage.getItem("detailsOfNextRun"));					
-					//StartProtocolAnimation("autoQuantSeq_STAR",detailsOfThisRun);						
+					StartProtocolAnimation("autoQuantSeq_STAR",detailsOfThisRun);						
 					//StartProtocolAnimation("DEMO1",{animationSpeed: ANIMATION_SPEED_NONE});
 					//StartProtocolAnimation("DEMO1",{animationSpeed: ANIMATION_SPEED_NORMAL});
 				}
