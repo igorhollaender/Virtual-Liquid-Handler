@@ -6,7 +6,7 @@
 /*	  General model template for an ANSI/SLAS-format 96-well consumable.
 /*	  and its particular instances.
 /*
-/*	  Last revision: IH 2014-07-30
+/*	  Last revision: IH 2014-12-17
 /*
 /*    (C)2014 Lexogen GmbH
 /*---------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ div.BILLBOARD4 {
 	z-index: 10; 
 	padding: 10px; 
 	margin: 0px; 	
-	width: 80px;
+	width: 160px;
 	opacity: 0.7; 	
 	bottom: 140px; 	
 	left: 20px;

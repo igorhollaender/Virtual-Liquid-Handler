@@ -4,7 +4,7 @@
 //	  V L H _ C o r e . j s
 //
 //
-//	  Last revision: IH 2014-12-16
+//	  Last revision: IH 2014-12-17
 //
 //    (C)2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -1060,20 +1060,6 @@ var SetDeck = function(deckType) {
 	}
 }
 
-//IH140822 DEPRECATED
-/*
-var SetPipettor = function(pipettorType,columnShownTo) {	
-	//IH140822 for legacy reasons, this function sets the Pipettor96
-	
-	// currentDeck has to be defined before calling this method
-	RemoveAllChildren('Pipettor_GROUP');
-	
-	currentPipettor = new Pipettor96(currentPipettorId,
-		"Pipettor_GROUP",currentDeck,currentDeck.parkingLocation,0,0,0,
-		{"columnShownTo": columnShownTo}); 	
-}
-*/
-
 var SetPipettor = function(pipettorType,details) {	
 	
 	// currentDeck has to be defined before calling this method
@@ -1089,10 +1075,7 @@ var SetPipettor = function(pipettorType,details) {
 		"Pipettor_GROUP",currentDeck,currentDeck.parkingLocation,0,0,0,details);		
 	default:
 		break;
-	}
-			
-	currentPipettor = new Pipettor8(currentPipettorId,
-		"Pipettor_GROUP",currentDeck,currentDeck.parkingLocation,0,0,0,details);		
+	}	
 }
 
 

@@ -27,7 +27,7 @@
 					SetDeck("STARNGS");
 					//SetDeck("SCICLONE");
 					//SetPipettor("Pipettor96",{columnShownTo: 2});
-					SetPipettor("Pipettor8",{wellsToShowString: "A B H"});
+					SetPipettor("Pipettor8",{wellsToShowString: "A B C D E F G H"});
 										
 					//StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_NORMAL});
 					
@@ -70,9 +70,13 @@ showStat='false'>
 		
 		<input type="button" value="DEMO1 NORMAL" onclick='StartProtocolAnimation("DEMO1",{animationSpeed: ANIMATION_SPEED_NORMAL});'/>
 		<input type="button" value="DEMO1 FAST" onclick='StartProtocolAnimation("DEMO1",{animationSpeed: ANIMATION_SPEED_FAST});'/>		
-		<input type="button" value="autoQuantSeq DEMO NORMAL" onclick='StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_NORMAL});'/>
-		<input type="button" value="autoQuantSeq DEMO FAST" onclick='StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_FAST});'/>
 		-->
+		<input type="button" value="autoQuantSeq NORMAL" onclick='StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_NORMAL});'/>
+		<input type="button" value="autoQuantSeq FAST" onclick='StartProtocolAnimation("autoQuantSeq",{animationSpeed: ANIMATION_SPEED_FAST});'/>
+		<input type="button" value="autoQuantSeq_STAR NORMAL" onclick='StartProtocolAnimation("autoQuantSeq_STAR",{animationSpeed: ANIMATION_SPEED_NORMAL});'/>
+		<input type="button" value="autoQuantSeq_STAR FAST" onclick='StartProtocolAnimation("autoQuantSeq_STAR",{animationSpeed: ANIMATION_SPEED_FAST});'/>
+		
+		
 		<input type="button" value="Restart" onclick=
 			'sessionStorage.setItem("detailsOfNextRun","{animationSpeed: ANIMATION_SPEED_NORMAL}");location.reload();'
 			/>
@@ -103,10 +107,10 @@ showStat='false'>
 			 document.getElementById('X3DObject').runtime.resetView();"/>
 	</div>
 	<div style="margin:10">
-		<b>VIRTUAL LIQUID HANDLER, Ver. DEBUG 2014-08-22a (Experimental)</b>
+		<b>VIRTUAL LIQUID HANDLER, Ver. DEBUG 2014-12-17a (Experimental)</b>
 		Copyright (C)2014 <a href="http://www.lexogen.com">Lexogen GmbH.</a>.
 		Powered by <a href="http://www.x3dom.org">X3DOM.</a>
-		Tested with <a href="http://www.mozilla.org/en-US/firefox">Firefox 31.0.</a>
+		Tested with <a href="http://www.mozilla.org/en-US/firefox">Firefox 34.0.</a>
 	</div>	
 </footer>
 

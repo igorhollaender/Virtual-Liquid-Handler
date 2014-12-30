@@ -6,7 +6,7 @@
 //	  General model template for a wellplate-like consumable.
 //	  and its particular instances.
 //
-//	  Last revision: IH 2014-08-22
+//	  Last revision: IH 2014-12-17
 //
 //    (C)2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -624,6 +624,14 @@ function TipBox96(id,parentGroupId,deck,locationId,details) {
 	labwareGroup = document.getElementsByClassName("Labware GROUP " + id).item(0);
 	labwareGroup.setAttribute("wellHeight", this.wellHeight.toString());
 	labwareGroup.setAttribute("wellOffsetFromPlateBottom", this.wellOffsetFromPlateBottom.toString());	
+		
+	if(!(details==null))
+	{		
+		if("materialType" in details)	
+		{		
+			this.SetMaterialBody(details.materialType);				
+		}	
+	}
 }
 
 TipBox96.prototype.SetDefaultMaterialBodyAndWell = function() {
@@ -639,6 +647,39 @@ TipBox96.prototype.SetDefaultMaterialBodyAndWell = function() {
 		{
 			material[i].setAttribute("diffuseColor","0.0 0.2 0.7");
 			material[i].setAttribute("specularColor","0.0 0.2 0.7");
+			material[i].setAttribute("emissiveColor","0 0.01 0.01");
+			material[i].setAttribute("ambientIntensity","0.333");
+			material[i].setAttribute("shineness","0.1");
+			material[i].setAttribute("transparency","0.3");			
+		}
+}
+
+TipBox96.prototype.SetMaterialBody = function(bodyMaterialTypeString) {
+
+		var material = Array.prototype.slice.call(
+			document.getElementsByClassName("Body MATERIAL ".concat(this.id))); 			
+		
+		i = material.length;
+		while(i--)
+		{
+			switch(bodyMaterialTypeString)
+			{
+				case 'RED':
+					material[i].setAttribute("diffuseColor","0.7 0.1 0.1");
+					material[i].setAttribute("specularColor","0.7 0.1 0.1");
+					break;
+				case 'BLUE':
+					material[i].setAttribute("diffuseColor","0.0 0.2 0.7");
+					material[i].setAttribute("specularColor","0.0 0.2 0.7");
+					break;
+				case 'GREEN':
+					material[i].setAttribute("diffuseColor","0.0 0.7 0.1");
+					material[i].setAttribute("specularColor","0.0 0.7 0.1");
+					break;
+				default:	
+					material[i].setAttribute("diffuseColor","0.0 0.2 0.7");
+					material[i].setAttribute("specularColor","0.0 0.2 0.7");
+			}
 			material[i].setAttribute("emissiveColor","0 0.01 0.01");
 			material[i].setAttribute("ambientIntensity","0.333");
 			material[i].setAttribute("shineness","0.1");

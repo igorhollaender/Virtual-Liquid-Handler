@@ -4,7 +4,7 @@
 //	  V L H _ L i q u i d . j s
 //
 //
-//	  Last revision: IH 2014-07-30
+//	  Last revision: IH 2014-12-17
 //
 //    (C)2014 Lexogen GmbH
 //---------------------------------------------------------------------------------
@@ -57,7 +57,8 @@ function SetMaterialLiquid(liquidMaterialElement,liquidClass) {
 		liquidMaterialElement.setAttribute("emissiveColor","0.0 0.1 1.0");			
 		break;		
 		
-	case "LiquidClassWhite":			
+	case "LiquidClassWhite":		
+	case "WASTE":	
 		liquidMaterialElement.setAttribute("diffuseColor","0.9 1.0 0.9");
 		liquidMaterialElement.setAttribute("emissiveColor","0.9 1.0 0.9");			
 		break;		
